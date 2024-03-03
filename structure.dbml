@@ -1,0 +1,119 @@
+Table roles {
+    id integer [primary key]
+    role_name string // admin, employee
+  }
+  
+  Table permissions {
+    id integer [primary key]
+    permission_name string // name of the permission, e.g., "access_api_1"
+    method string
+  }
+  
+  Table role_permissions {
+    id integer [primary key]
+    role_id integer [ref: > roles.id]
+    permission_id array [ref: > permissions.id]
+  }
+  
+  Table users {
+    id integer [primary key]
+    username string
+    password string
+    created_at timestamp
+  }
+  
+  Table user_roles {
+    id integer [primary key]
+    user_id integer [ref: > users.id]
+    role_id integer [ref: > roles.id]
+  }
+  
+  Table employee {
+    id integer [primary key]
+    user_id integer [ref: > users.id]
+    full_name string
+    password string
+    phone_number string
+    employment_status string // e.g., "full-time", "part-time", "contractor"
+    salary decimal
+    emergency_contact_name string
+    emergency_contact_phone string
+    maximum_leave_days integer
+    employee_id string
+    department string
+    employment_start_date date
+    pay_frequency string // e.g., "weekly", "bi-weekly", "monthly"
+    pan string
+    max_sick_leaves integer
+    referal string
+    date_of_birth date
+    email string
+    supervisor_manager_id integer [ref: > users.id] // assuming supervisors/managers are stored in the `users` table
+    work_schedule_hours string // e.g., "9:00-17:00"
+    bonus_information string
+    aadhar_number string
+    created_by integer [ref: > users.id]
+  
+  }
+  Table agency {
+    id integer [primary key]
+    name string
+    phone_number_1 string
+    website string
+    owner_name string
+    owner_email string
+    internal_notes text
+    registration_id string
+    address string
+    email string
+    phone_number string
+    email_2 string
+    phone_number_2 string
+    created_by integer [ref: > users.id]
+  }
+  
+  Table hospital {
+    id integer [primary key]
+    name string
+    phone_number_1 string
+    phone_number_2 string
+    website string
+    remark string
+    registration_id string
+    email string
+    address string
+    referal string
+    phone_number_3 string
+    email_2 string
+    branch_name array
+    created_by integer [ref: > users.id]
+  }
+  
+  Table candidate {
+    id integer [primary key]
+    name string
+    mobile string
+    email string
+    address string
+    address_place string
+    degree string
+    working_status string
+    gap string
+    country_to_travel string
+    alias_name string
+    whatsapp string
+    passport_no string
+    department string
+    last_working_date date
+    registration_validity string
+    agency string
+    dob date
+    created_by integer [ref: > users.id]
+  
+  }
+  
+  Ref: "users"."username" < "users"."id"
+  
+  Ref: "roles"."id" < "roles"."role_name"
+  
+  Ref: "permissions"."id" < "permissions"."permission_name"
